@@ -1,2 +1,2 @@
 # corioManager
-Control client side software for corioMaster video wall processor
+Control client software for tvONE corioMaster video wall processor
