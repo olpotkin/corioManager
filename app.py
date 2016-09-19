@@ -67,5 +67,16 @@ class Client:
             self.logged = True
 
     # 3.1 Logout from the unit
+    def close(self):
+        if self.logged:
+            self.connection.write('logout\n')
+        self.connection.close()
+        self.logged = False
+
 
     # 4. Send management command(s) to the unit
+
+
+
+
+
