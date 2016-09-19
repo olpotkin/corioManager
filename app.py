@@ -75,7 +75,19 @@ class Client:
 
 
     # 4. Send management command(s) to the unit
+    def send_command(self, command, expected=None):
+        response = ""
+        if not self.logged:
+            self.login()
+        result = self.connection.write(command + "\r\n")
 
+        if expected is not None:
+            expected = "!Done " + command + "\r\n"
+            try:
+                index, obj, response = self.connection.expect( [re.compile(expected)] )
+            except EOFError, e:
+                print "Exception: e="+repr(e)
+        return response
 
 
 
