@@ -4,32 +4,38 @@
 #
 
 import logging
+from flask import Flask
+
 from Client import Client
 import Management
 
+# REST commands via FLASK:
+app = Flask(__name__)
+
+# Logs
 logging.basicConfig(level=logging.INFO)
 
 # IP address of corioMaster Unit
-corioClient = Client('127.0.0.1')
+corioClient = Client('169.254.6.16')
 
 # Get an instance of the class
 corioManager = Management.corioManager()
 
+# API's:
+# 1. Main page (for testing)
+@app.route("/")
+def hello():
+    return "corioManager!"
 
-# Console input
-user_cmd = None
-while not user_cmd:
-    user_cmd = raw_input()
-    if user_cmd == 'preset':
-        # Switch preset
-        corioManager.change_preset(corioClient)
-    else:
-        print ('Command not found, try again...\n')
-
-
-
-
-
-
+# 2. Set preset by id
+@app.route("/setpreset/<int:id>")
+def setpreset(id):
+    try:
+        corioManager.change_preset(corioClient, id)
+        return "Done!"
+    except:
+        return "Unit is not connected!"
 
 
+if __name__ == "__main__":
+    app.run()
