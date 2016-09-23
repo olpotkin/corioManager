@@ -58,6 +58,10 @@ class Client:
         # checking response
         result = self.connection.read_until(expected)
 
+        # TODO: print (result) !!!
+        # check for some useful information from result
+
+
         # if login is not correct
         if result != expected:
             raise Exception("Invalid login: {0}".format(result))
@@ -81,7 +85,7 @@ class Client:
         if expected is not None:
             expected = "!Done " + command + "\r\n"
             try:
-                index, obj, response = self.connection.expect( [re.compile(expected)] )
+                index, obj, response = self.connection.expect([re.compile(expected)])
             except EOFError, e:
                 print "Exception: e="+repr(e)
         return response

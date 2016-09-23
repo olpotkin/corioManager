@@ -7,21 +7,22 @@
 class corioManager:
 
     # Switching presets
-    # parameter 1 - self (it just works)
+    # parameter 1 - self
     # parameter 2 - instance of corioClient
     # parameter 3 - Id of preset to turn on
-    def change_preset(self, corioClient, id):
+    def change_preset(self, corioClient, preset_id):
         corioClient.send_command("StartBatch(1)")
         corioClient.send_command("EndBatch()")
-        corioClient.send_command("Preset.Take = {0}".format(id))
+        corioClient.send_command("Preset.Take = {0}".format(preset_id))
         corioClient.send_command("Layout1.StbdActive")
 
     # TODO: Move Window inside Canvas: X and Y axes (required existing Canvas in Preset)
     # parameter 1: id od the window
     # parameter 2: value to move window on X-axis
     # parameter 3: value to move window on Y-axis
-    def move_window(self, id, moveX, moveY):
-        x = 0
+    def move_window(self, window_id, moveX, moveY):
+        return 1
+
 
     ###########################
     # HELPERS
@@ -30,6 +31,10 @@ class corioManager:
     # TODO: 1. Get current X-position of the Window
     # Request: "Window<N>", where N - number of window
     # for example, Window3
+
+    # parameter 1: self
+    # parameter 2: Client instance
+    # TODO: parameter 3: id of the window
     def get_window_physical_center_x(self, corioClient):
         corioClient.send_command("StartBatch(1)")
         corioClient.send_command("EndBatch()")
@@ -40,6 +45,7 @@ class corioManager:
 
         center_x = 0
         return center_x
+
 
     # TODO:  2. Get current Y-position of the Window
     def get_window_physical_center_y(self, corioClient):
