@@ -5,7 +5,7 @@
 
 import telnetlib
 import re
-
+import time
 
 # Default unit connection settings
 DEFAULT_PORT = 10001
@@ -26,6 +26,7 @@ class Client:
         self.port = port
         self.user = user
         self.password = password
+        self.connected_timestamp = None
         self.connection = None
         self.logged = False
 
@@ -61,6 +62,8 @@ class Client:
         # TODO: print (result) !!!
         # check for some useful information from result
 
+        # update timestamp of connection (for session refresh purpose)
+        self.connected_timestamp = time.time()
 
         # if login is not correct
         if result != expected:
@@ -80,6 +83,12 @@ class Client:
         response = ""
         if not self.logged:
             self.login()
+
+        # Checking time difference for session update (login again if session state more 2 hours)
+        timediff = int(time.time() - self.connected_timestamp)
+        if timediff > 2*60*60:
+            self.login()
+
         result = self.connection.write(command + "\r\n")
 
         if expected is not None:
