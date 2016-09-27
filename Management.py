@@ -31,15 +31,15 @@ class corioManager:
     # for example, Window3
 
     # parameter 1: Client instance
-    # TODO: parameter 3: id of the window
-    def get_window_physical_center_x(self, corioClient):
+    # parameter 2: id of the window
+    def get_window_physical_center_x(self, corioClient, window_id):
         corioClient.send_command("StartBatch(1)")
         corioClient.send_command("EndBatch()")
 
         # parameter 1 - command
         # parameter 2 - expected response
-        corio_response = corioClient.send_command("Window3", "!Done Window3")
-
+        corio_response = corioClient.send_command("Window{0}".format(window_id),
+                                                  "!Done Window{0}".format(window_id))
         # TODO: 1.1 parse data to get X-value
         look_param = "PhysicalCenterX"
 
