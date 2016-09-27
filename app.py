@@ -50,5 +50,8 @@ def move_window(window_id, moveX, moveY):
     data = corioManager.get_window_physical_center_x(corioClient)
 
 
+# TODO: ping local machine for IP address
 if __name__ == "__main__":
-    app.run()
+    # for local testing
+    app.run(host="127.0.0.1", port=5000)
+#   app.run(host="172.103.24.143", port=5001)

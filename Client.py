@@ -54,9 +54,9 @@ class Client:
         # send data to corio
         self.connection.write('login({0},{1})\n'.format(self.user, self.password))
 
-        # getting response from corio
+        # setting expected response
         expected = """!Info : User {0} Logged In\r\n""".format(self.user)
-        # checking response
+        # checking response (reading untill expected response)
         result = self.connection.read_until(expected)
 
         # TODO: print (result) !!!
