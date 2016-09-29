@@ -3,11 +3,13 @@
 # Oleg Potkin
 #
 
-import logging
 from flask import Flask
 
 from Client import Client
 import Management
+
+import logging
+import re
 
 # REST commands via FLASK:
 app = Flask(__name__)
@@ -20,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 corio_client = Client('172.24.103.148')
 
 # Get an instance of the class
-corio_manager = Management.corioManager()
+corio_manager = Management.CorioManager()
 
 # API's:
 # 1. Main page (for testing)
@@ -47,20 +49,8 @@ def set_preset(preset_id):
 @app.route("/move_window/<int:window_id>/<int:moveX>/<int:moveY>")
 def move_window(window_id, moveX, moveY):
 
-    #corio_manager.move_window(window_id, moveX, moveY)
-    #data = corio_manager.get_window_physical_center_x(corio_client, window_id)
-
-    # mock data (taken from real query):
-    data = """!Done StartBatch(1)\r\n!Done EndBatch()\r\nWindow3.FullName = Window3\r
-Window3.Status = FREE\r\nWindow3.Alias = selfView\r\nWindow3.Input = Slot2.In1\r
-Window3.Canvas = Canvas1\r\nWindow3.CanWidth = 1926\r\nWindow3.CanHeight = 1084\r
-Window3.CanXCentre = 3853\r\nWindow3.CanYCentre = 542\r\nWindow3.Zorder = 3\r
-Window3.RotateDeg = 0\r\nWindow3.WDP = 2\r\nWindow3.WDPQ = 1024\r
-Window3.BdrPixWidth = 0\r\nWindow3.BdrRGB = 0\r\nWindow3.HFlip = Off\r
-Window3.VFlip = Off\r\nWindow3.FTB = 0\r\nWindow3.SCFTB = Off\r\nWindow3.SCHShrink = Off\r
-Window3.SCVShrink = Off\r\nWindow3.SCSpin = 0\r\nWindow3.AccountForBezel = No\r
-Window3.PhysicalCenterX = 2438400\r\nWindow3.PhysicalCenterY = 344129\r\nWindow3.PhysicalWidth = 1219200\r
-Window3.PhysicalHeight = 688258\r\nWindow3.ReducedQuality = No\r\n!Done Window3\r\n"""
+    corio_manager.move_window(window_id, moveX, moveY)
+    c_x, c_y = corio_manager.get_window_physical_center_x_y(corio_client, window_id)
 
 
 # TODO: ping local machine for IP address
