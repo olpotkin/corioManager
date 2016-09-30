@@ -9,7 +9,6 @@ from Client import Client
 import Management
 
 import logging
-import re
 
 # REST commands via FLASK:
 app = Flask(__name__)
@@ -48,9 +47,7 @@ def set_preset(preset_id):
 # TODO: 3.4. Move down  (window_id, 0, -Y)
 @app.route("/move_window/<int:window_id>/<int:moveX>/<int:moveY>")
 def move_window(window_id, moveX, moveY):
-
-    corio_manager.move_window(window_id, moveX, moveY)
-    c_x, c_y = corio_manager.get_window_physical_center_x_y(corio_client, window_id)
+    corio_manager.move_window(window_id, moveX, moveY, corio_client)
 
 
 # TODO: ping local machine for IP address
