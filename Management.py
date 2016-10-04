@@ -23,7 +23,7 @@ class CorioManager:
     # parameter 3: value to move window on Y-axis
     def move_window(self, window_id, moveX, moveY, corio_client):
         # Call method to get current X,Y position of center of window
-        center_x, center_y = self.get_window_physical_center_x_y(corio_client, window_id)
+        center_x, center_y = Helpers.get_window_physical_center_x_y(corio_client, window_id)
 
         # Calculate new center coordinates of Window
         new_center_x = center_x + moveX
@@ -34,10 +34,8 @@ class CorioManager:
 
         return 1
 
-    ###########################
-    # HELPERS
-    ###########################
 
+class Helpers:
     # METHOD: Get current X-position and Y-position of the Window
     # Request: "Window<N>", where N - ID of window (e.g., Window3)
     # parameter 1: Client instance
