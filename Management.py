@@ -17,7 +17,7 @@ class CorioManager:
         corio_client.send_command("Preset.Take = {0}".format(preset_id))
         corio_client.send_command("Layout1.StbdActive")
 
-    # TODO: Move Window inside Canvas: X and Y axes (required existing Canvas in Preset)
+    # METHOD: Move Window inside Canvas: X and Y axes (required existing Canvas in Preset)
     # parameter 1: id of the window
     # parameter 2: value to move window on X-axis
     # parameter 3: value to move window on Y-axis
@@ -29,10 +29,9 @@ class CorioManager:
         new_center_x = center_x + moveX
         new_center_y = center_y + moveY
 
-        # TODO: Call command to set new X and Y center coordinates of Window
-        #
-
-        return 1
+        # Call corioMaster's command to set new X and Y center coordinates of Window
+        corio_client.send_command("Window{0}.CanXCentre = {1}".format(window_id, new_center_x))
+        corio_client.send_command("Window{0}.CanYCentre = {1}".format(window_id, new_center_y))
 
 
 class Helpers:
