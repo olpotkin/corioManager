@@ -41,7 +41,7 @@ class CorioManager:
     # METHOD: Get current X-position and Y-position of the Window
     # Request: "Window<N>", where N - ID of window (e.g., Window3)
     # parameter 1: Client instance
-    # parameter 2: id of the window
+    # parameter 2: Id of the window
     def get_window_physical_center_x_y(self, corio_client, window_id):
         corio_client.send_command("StartBatch(1)")
         corio_client.send_command("EndBatch()")
@@ -59,3 +59,23 @@ class CorioManager:
         center_y = re.search('%s(.*)%s' % (start_y, end_xy), corio_response).group(1)
 
         return center_x, center_y
+
+    # METHOD: Get current Z-order of the Window
+    # Request: "Window<N>", where N - ID of window (e.g., Window3)
+    # parameter 1: Client instance
+    # parameter 2: Id of the window
+    def get_window_zorder(self, corio_client, window_id):
+        corio_client.send_command("StartBatch(1)")
+        corio_client.send_command("EndBatch()")
+
+        # parameter 1 - command (List all of the properties of this Window.)
+        # parameter 2 - expected response
+        corio_response = corio_client.send_command("Window{0}".format(window_id), "!Done Window{0}".format(window_id))
+
+        # Parse parameter: Zorder
+        start_param = 'Zorder = '
+        end_param = '\r\n'
+
+        z_order = re.search('%s(.*)%s' % (start_param, end_param), corio_response).group(1)
+
+        return z_order
