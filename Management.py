@@ -18,7 +18,7 @@ class CorioManager:
         corio_client.send_command("Layout1.StbdActive")
 
     # METHOD: Move Window inside Canvas: X and Y axes (required existing Canvas in Preset)
-    # parameter 1: id of the window
+    # parameter 1: Id of the window
     # parameter 2: value to move window on X-axis
     # parameter 3: value to move window on Y-axis
     # parameter 4: instance of corio_client
@@ -35,12 +35,29 @@ class CorioManager:
         corio_client.send_command("Window{0}.CanYCentre = {1}".format(window_id, new_center_y))
 
     # METHOD: Set Z-order-parameter of the Window
-    # parameter 1: id of the window
+    # parameter 1: Id of the window
     # parameter 2: new value of Z-order
     # parameter 3: instance of corio_client
     def set_zorder(self, window_id, z_order, corio_client):
+        corio_client.send_command("StartBatch(1)")
+        corio_client.send_command("EndBatch()")
+
         # Call corioMaster's command to set new Z-order of the Window
         corio_client.send_command("Window{0}.Zorder = {1}".format(window_id, z_order))
+
+    # TODO: METHOD: Move the window forward on Z-axis
+    # parameter 1: Id of the window
+    # parameter 2: instance of corio_client
+    # TODO: check for forward limit! Minimum Zorder value = 1
+    def zorder_forward(self, window_id, corio_client):
+        window_id = 0
+
+    # TODO: METHOD: Move the window backward on Z-axis
+    # parameter 1: Id of the window
+    # parameter 2: instance of corio_client
+    def zorder_backward(self, window_id, corio_client):
+        window_id = 0
+
 
 
 class Helpers:
