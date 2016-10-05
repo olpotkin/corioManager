@@ -96,5 +96,5 @@ class Client:
             try:
                 index, obj, response = self.connection.expect([re.compile(expected)])
             except EOFError, e:
-                print "Exception: e="+repr(e)
+                print "Exception: e=" + repr(e)
         return response
