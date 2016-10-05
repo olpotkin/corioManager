@@ -21,6 +21,7 @@ class CorioManager:
     # parameter 1: id of the window
     # parameter 2: value to move window on X-axis
     # parameter 3: value to move window on Y-axis
+    # parameter 4: instance of corio_client
     def move_window(self, window_id, moveX, moveY, corio_client):
         # Call method to get current X,Y position of center of window
         center_x, center_y = Helpers.get_window_physical_center_x_y(corio_client, window_id)
@@ -32,6 +33,14 @@ class CorioManager:
         # Call corioMaster's command to set new X and Y center coordinates of Window
         corio_client.send_command("Window{0}.CanXCentre = {1}".format(window_id, new_center_x))
         corio_client.send_command("Window{0}.CanYCentre = {1}".format(window_id, new_center_y))
+
+    # METHOD: Set Z-order-parameter of the Window
+    # parameter 1: id of the window
+    # parameter 2: new value of Z-order
+    # parameter 3: instance of corio_client
+    def set_zorder(self, window_id, z_order, corio_client):
+        # Call corioMaster's command to set new Z-order of the Window
+        corio_client.send_command("Window{0}.Zorder = {1}".format(window_id, z_order))
 
 
 class Helpers:
